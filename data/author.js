@@ -13,15 +13,11 @@ export const schema = [`
 
 export const resolvers = {
     Query: {
-        author(_, { firstName, lastName }){
-            let where = { firstName, lastName};
-            if (!lastName){
-                where = { firstName };
-            }
-            if (!firstName){
-                where = { lastName };
-            }
-            return Author.find({ where });
+        author(_, args) {
+            return Author.find({ where: args });
+        },
+        authors() {
+            return Author.findAll({})
         }
     },
     Author: {

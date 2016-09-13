@@ -10,6 +10,10 @@ const db = new Sequelize('blog', null, null, {
 });
 
 const AuthorModel = db.define('author', {
+  id:{
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+  },
   firstName: {
     type: Sequelize.STRING,
   },
@@ -19,6 +23,10 @@ const AuthorModel = db.define('author', {
 });
 
 const PostModel = db.define('post', {
+  id:{
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+  },
   title: {
     type: Sequelize.STRING,
   },
@@ -50,12 +58,15 @@ PostModel.belongsTo(AuthorModel);
 casual.seed(123);
 db.sync({ force: true })
   .then(()=> {
+     let id=0;
   _.times(10, ()=> {
     return AuthorModel.create({
+      id: id++,
       firstName: casual.first_name,
       lastName: casual.last_name,
     }).then(author => {
       return author.createPost({
+        id : 1000+id++,
         title: `A post by ${author.firstName} ${author.lastName}`,
         text: casual.sentences(3),
         tags: casual.words(3).split(' ').join(','),

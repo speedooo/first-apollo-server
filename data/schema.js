@@ -11,7 +11,8 @@ import Connectors from './connectors';
 const Query =[`
     
     type Query {
-        author(firstName: String, lastName: String): Author
+        author(id: Int, firstName: String, lastName: String): Author
+        authors: [Author] 
         fortuneCookie: String
     }
 
