@@ -1,6 +1,6 @@
 import Author from './author';
 const Post = `
-  type Book {
+  type Post {
     id: Int!
     tags: [String]
     title: String

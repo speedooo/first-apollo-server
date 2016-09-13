@@ -1,25 +1,25 @@
+import { merge } from 'lodash';
+import Author from './author'
+
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+//import AuthorResolver from './authorResolver'
+import Resolvers from './resolvers';
+import Connectors from './connectors';
+
+// the schema allows the following two queries:
+const RootQuery =`
+    
+    type RootQuery {
+        author(firstName: String, lastName: String): Author
+        fortuneCookie: String
+    }
+
+`;
+
+
+
+
 const typeDefinitions = `
-type Author {
-  id: Int! # the ! means that every author object _must_ have an id
-  firstName: String
-  lastName: String
-  posts: [Post] # the list of Posts by this author
-}
-
-type Post {
-  id: Int!
-  tags: [String]
-  title: String
-  text: String
-  views: Int
-  author: Author
-}
-
-# the schema allows the following two queries:
-type RootQuery {
-  author(firstName: String, lastName: String): Author
-  fortuneCookie: String
-}
 
 # this schema allows the following two mutations:
 type RootMutation {
@@ -44,4 +44,11 @@ schema {
 }
 `;
 
-export default [typeDefinitions];
+export default makeExecutableSchema ({
+    typeDefs: [typeDefinitions, RootQuery, Author],
+    resolvers: Resolvers,
+    connectors: Connectors,
+//  logger = { log: (e) => console.log(e) },
+// allowUndefinedInResolve = false, //optional
+//  resolverValidationOptions = {}, //optional
+});
